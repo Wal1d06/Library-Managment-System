@@ -23,14 +23,13 @@ public:
     }
 
     // Display book details
-
     void Display() {
         cout << endl << "********************************" << endl;
         cout << "ISBN: " << ISBN << endl;
         cout << "Title: " << title << endl;
         cout << "Author: " << author << endl;
         cout << "Publish date: " << publish_date << endl;
-        cout << "Genre" << genre;
+        cout << "Genre: " << genre <<endl;
         cout << "********************************" << endl;
 
     }
@@ -57,10 +56,9 @@ void AddBook(vector<Book>& books) {
     getline(cin, genre);
 
     cout << "Book added successfully!" << endl;
-
-    books.push_back(Book(ISBN, title, author, publish_date, genre));
-
-    void Display();
+    Book book = Book(ISBN, title, author, publish_date, genre);
+    books.push_back(book);
+    book.Display();
 
 }
 
@@ -93,7 +91,7 @@ void EditBook(vector<Book>& books) {
     int publish_date;
     cout << "Enter ISBN of the book to edit: ";
     cin >> ISBN;
-    cin.ignore(); // Clear the input buffer
+    cin.ignore(); 
 
     for (auto i = books.begin(); i != books.end(); ++i) {
         if (i->ISBN == ISBN) {
@@ -123,32 +121,58 @@ void EditBook(vector<Book>& books) {
     cout << "Book with ISBN " << ISBN << " not found!" << endl;
 }
 
-
+///////////////////////////////////////////////
+///////////////////////////////////////////////
 // Function to display all books in the library
+///////////////////////////////////////////////
+///////////////////////////////////////////////
 
 void DisplayAllBooks(vector<Book>& books) {
     if (books.empty()) {
         cout << "No books available in the library." << endl;
     }
     else {
-        for (auto i = 0; i < books.size(); ++i) {
+        for (int i = 0; i < books.size(); ++i) {
             books[i].Display();  // Display each book
         }
     }
 }
 
 
-int main() {
+///////////////////////////////////
+///////////////////////////////////
+// Function do search book by genre
+///////////////////////////////////
+///////////////////////////////////
 
+void SearchByGenre(vector<Book>& books) {
+    string uGenre;
+    if (books.empty()) {
+        cout << "No books available in the library." << endl;
+    }
+      else
+     {
+        cout << "Enter genre: ";
+        cin >> uGenre;
+        
+        for (int i = 0; i < books.size(); ++i) {
+            if (books[i].genre == uGenre) {books[i].Display();}
+        }
+        
+    }
+}
+
+
+int main() {
     vector<Book> books; // books is the name of the vector that stores all of our books
     int choice;
-    string pass;
+    string userPass;
 
     while (true) {
         cout << "Enter The Passcode: ";
-        cin >> pass;
+        cin >>  userPass;
 
-        if (pass == "12345") {
+        if ( userPass == "12345") {
             cout << "Access Granted!." << endl;
             break;
         }
@@ -156,7 +180,6 @@ int main() {
             cout << "Incorrect passcode. Please try again." << endl;
         }
     }
-
     while (true) {
         cout << "********************************" << endl;
         cout << "******NJUPT Library System******" << endl;
@@ -165,6 +188,7 @@ int main() {
         cout << "2. Remove Book" << endl;
         cout << "3. Edit Book" << endl;
         cout << "4. View All Books" << endl;
+        cout << "5. Search Book By Genre" << endl;
         cout << "Choose an option: ";
         cin >> choice;
 
@@ -176,11 +200,12 @@ int main() {
         case 3: EditBook(books);
             break;
         case 4: DisplayAllBooks(books);
+            break;
+        case 5: SearchByGenre(books);
+            break;
         default:
             cout << "Invalid choice. Try again." << endl;
         }
     }
-
-
     return 0;
 }
