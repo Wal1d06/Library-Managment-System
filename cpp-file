@@ -23,6 +23,7 @@ public:
     }
 
     // Display book details
+// Display book details
     void Display() {
         cout << endl << "********************************" << endl;
         cout << "ISBN: " << ISBN << endl;
